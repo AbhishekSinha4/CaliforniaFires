@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Results | YOUR TITLE HERE</title>
-  <meta name="description" content="Chapter 5 Results | YOUR TITLE HERE" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <title>Chapter 5 Results | California Fires</title>
+  <meta name="description" content="Chapter 5 Results | California Fires" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Results | YOUR TITLE HERE" />
+  <meta property="og:title" content="Chapter 5 Results | California Fires" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Results | YOUR TITLE HERE" />
+  <meta name="twitter:title" content="Chapter 5 Results | California Fires" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Abhishek Sinha, Tomislav Galjanić" />
 
 
-<meta name="date" content="2020-11-09" />
+<meta name="date" content="2021-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="missing-values.html"/>
 <link rel="next" href="interactive-component.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -68,14 +67,20 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">CF</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#long-term-trends"><i class="fa fa-check"></i><b>5.1</b> Long term trends</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analysis-of-wildfire-incidents-in-california-from-2015-to-2019"><i class="fa fa-check"></i><b>5.2</b> Analysis of wildfire incidents in California from 2015 to 2019</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#correlation-of-the-key-wildfire-impacts-acres-burned-property-destroyed-or-damaged-and-human-fatalities"><i class="fa fa-check"></i><b>5.3</b> Correlation of the key wildfire impacts (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#all-financial-costs-together"><i class="fa fa-check"></i><b>5.4</b> All financial costs together</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -89,7 +94,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">California Fires</a>
           </h1>
         </div>
 
@@ -99,7 +104,74 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
+<div id="long-term-trends" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Long term trends</h2>
+<p>First we look at long term trends in fire incidents over 35 years (1984 - 2018)</p>
+<ol style="list-style-type: lower-alpha">
+<li>Analysis of trends in frequency and size of wildfires in California for the period 1984-2018</li>
+</ol>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>It is clearly visible from the visualization that there is an upward trend in severity of fire based incidents which is cause for concern. This is further emphasized by the rolling mean lines across 5 and 10 years which also show an upward trend.</p>
+<p>Next we explore the fire sizes.</p>
+<p>First we visualize a distribution of all fire incidents across 35 years.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>The graph between Count and Acres is incredibly right skewed which is expected as the number of fires with extremely large acre values reduces. The distribution is also very spread. To visualize this better hence, we take the log of the acre column as an axis instead.</p>
+<p>It is still clearly visible that the distribution of Acres Burned is incredibly right skewed.</p>
+<p>To explore this distribution further we explore the data by different fire types
+and visualize them as boxplots.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>It is clearly visible from the boxplot that wildfires contribute to the largest amount of Burned Acres but these are outliers mostly. The Median fire size for all types is relatively closer.</p>
+<p>To get a better picture of this general comparison, we remove outliers and replot the same visualization:</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>This reaffirms that the medians are close to each other, however wildfires are also visibly more right skewed than the other types.</p>
+<p>“Out of Area Response” and “Complex” only have 1 row each and hence do not contribute much.</p>
+<p>We note from this analysis that wildfires seem to be the most prominent and head into the next part of our analysis to focus more on wildfire incidents over the last 5 years.</p>
+</div>
+<div id="analysis-of-wildfire-incidents-in-california-from-2015-to-2019" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Analysis of wildfire incidents in California from 2015 to 2019</h2>
+<div id="annual-data-on-acres-burned-property-destroyed-or-damaged-and-human-fatalities" class="section level5" number="5.2.0.0.1">
+<h5><span class="header-section-number">5.2.0.0.1</span> Annual data on Acres Burned, Property Destroyed or Damaged, and Human Fatalities</h5>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-12-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<p>We visualize the impact caused by fires over the past 5 years to get an understanding of the scale of damage caused over the years.
+2018 seems to have been the most damaging in terms of lives lost and acres burned but 2017 seems to peak in terms of most structures destroyed and damaged.</p>
+</div>
+<div id="annual-data-by-county-acres-burned-property-destroyed-or-damaged-and-human-fatalities" class="section level5" number="5.2.0.0.2">
+<h5><span class="header-section-number">5.2.0.0.2</span> Annual data by County (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)</h5>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-13-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-13-3.png" width="672" /></p>
+<p>We visualize the impact caused by fires to each county to get an understanding of which counties have been most impacted in terms of acres lost, structures damaged and lives lost.</p>
+<p>Butte County seems to have lost a lot of lives in 2018 and Napa consistently seems to be showing cause for concern.
+It can be noted here though that no county seems to have been consistently harmed every year, (rather large incidents are not that frequent it seems).</p>
+</div>
+<div id="causes-of-wildfires-with-the-most-impact-on-acres-burned-property-destroyed-or-damaged-and-human-fatalities" class="section level5" number="5.2.0.0.3">
+<h5><span class="header-section-number">5.2.0.0.3</span> Causes of wildfires with the most impact on Acres Burned, Property Destroyed or Damaged, and Human Fatalities</h5>
+<p><img src="finalproj_files/figure-html/plots-1.png" width="672" /><img src="finalproj_files/figure-html/plots-2.png" width="672" /><img src="finalproj_files/figure-html/plots-3.png" width="672" /></p>
+<p>We visualize the impact caused by fires by cause to get an understanding of which causes require the most concern.
+Electric Power based incidents seem to have a significant human cost (lives lost and property damage) while most acres seemed to have been burned by undetermined sources (rural areas?).</p>
+</div>
+<div id="financial-damages-and-their-correlation-with-acres-burned-property-destroyed-or-damaged-and-human-fatalities-by-county" class="section level5" number="5.2.0.0.4">
+<h5><span class="header-section-number">5.2.0.0.4</span> Financial $ damages and their correlation with Acres Burned, Property Destroyed or Damaged, and Human Fatalities (by County)</h5>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>The most financial damage was caused by Electic Power, consistent with our previous impact analysis.</p>
+<p>Having seem the large impact caused by various fire causes over the years, we look at relationships that might exist there.</p>
+</div>
+</div>
+<div id="correlation-of-the-key-wildfire-impacts-acres-burned-property-destroyed-or-damaged-and-human-fatalities" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Correlation of the key wildfire impacts (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)</h2>
+<p>We plot scatter</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We plot a correlation matrix between the various impact columns as a heat map and everything demonstrates some amount of positive correlation.</p>
+<p>Importantly however, damaged properties seem to share a very high correlation with civilian deaths.</p>
+<p>For the other columns we look at scatterplots to understand them better.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-16-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+<p>It is clear from the scatter plots that while they had a positive correlation value, the columns do not seem to have too strong of a relationship. The high positive value might be due to the presence of many low and zero values in the impact columns.</p>
+<p>“Structural damages” and “Acres” burned do seem to have some positive relationship but it is not too strong.</p>
+</div>
+<div id="all-financial-costs-together" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> All financial costs together</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Finally we visualize all the Finances that go into these fire incidents and compare the amount of money spent yearly for fire prevention, the amount in terms of damages and the cost of suppressing the fire itself.</p>
 
+</div>
 </div>
             </section>
 
@@ -138,7 +210,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/05-results.Rmd",
+"link": "https://github.com/AbhishekSinha4/CaliforniaFires/edit/main/05-results.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -146,7 +218,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/05-results.Rmd",
+"link": "https://github.com/AbhishekSinha4/CaliforniaFires/blob/main/05-results.Rmd",
 "text": null
 },
 "download": null,

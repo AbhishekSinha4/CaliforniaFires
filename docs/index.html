@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>YOUR TITLE HERE</title>
-  <meta name="description" content="YOUR TITLE HERE" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <title>California Fires</title>
+  <meta name="description" content="California Fires" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="YOUR TITLE HERE" />
+  <meta property="og:title" content="California Fires" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="YOUR TITLE HERE" />
+  <meta name="twitter:title" content="California Fires" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Abhishek Sinha, Tomislav Galjanić" />
 
 
-<meta name="date" content="2020-11-09" />
+<meta name="date" content="2021-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 
 <link rel="next" href="data-sources.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -68,14 +67,20 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">CF</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#long-term-trends"><i class="fa fa-check"></i><b>5.1</b> Long term trends</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analysis-of-wildfire-incidents-in-california-from-2015-to-2019"><i class="fa fa-check"></i><b>5.2</b> Analysis of wildfire incidents in California from 2015 to 2019</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#correlation-of-the-key-wildfire-impacts-acres-burned-property-destroyed-or-damaged-and-human-fatalities"><i class="fa fa-check"></i><b>5.3</b> Correlation of the key wildfire impacts (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#all-financial-costs-together"><i class="fa fa-check"></i><b>5.4</b> All financial costs together</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -89,7 +94,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">California Fires</a>
           </h1>
         </div>
 
@@ -98,12 +103,14 @@
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">YOUR TITLE HERE</h1>
-<p class="author"><em>YOUR NAMES HERE</em></p>
-<p class="date"><em>2020-11-09</em></p>
+<h1 class="title">California Fires</h1>
+<p class="author"><em>Abhishek Sinha, Tomislav Galjanić</em></p>
+<p class="date"><em>2021-04-13</em></p>
 </div>
 <div id="introduction" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p>The large and devastating wildfires in the United States (especially in the West) and globally have become a common story across the news channels in recent years. According to the California Air Resources Board (CARB), the state agency that oversees climate change programs and pollution control efforts, “climate change, primarily caused by the burning of fossil fuels, is increasing the frequency and severity of wildfires not only in California but also all over the world. Since 1950, the area burned by California wildfires each year has been increasing, as spring and summer temperatures have warmed and spring snowmelt has occurred earlier.”</p>
+<p>In this project, our goal is to investigate the magnitude of changes in frequency and size of wildfires in California and the impacts in recent years that the wildfires have had on the economy, businesses, and people in the State of California. Our analysis focuses initially on identifying trends in wildfires in the last 35 years and then we proceed to look at their economic and human impact across the state and different regions in the period from 2015-2019. As some of the largest wildfires in California in recent years have been caused by electrical infrastructure (typically sparks from distribution and transmission lines), in the last part of our analysis we investigate the impact of wildfires on the wildfire prevention activities of the electric utility companies in California and costs associated with those activities. We specifically look at the level of capital and O&amp;M spending for the fire prevention activities of the Pacific Gas &amp; Electric Company, the power utility responsible for many large wildfires in northern California in the past 5 years, which had to make large financial settlement payouts to the fire victims and make significant investment in equipment and activities aimed at reducing the risk of future fires from utility equipment.</p>
 
 </div>
             </section>
@@ -143,7 +150,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/index.Rmd",
+"link": "https://github.com/AbhishekSinha4/CaliforniaFires/edit/main/index.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -151,7 +158,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/index.Rmd",
+"link": "https://github.com/AbhishekSinha4/CaliforniaFires/blob/main/index.Rmd",
 "text": null
 },
 "download": null,

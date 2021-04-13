@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Data sources | YOUR TITLE HERE</title>
-  <meta name="description" content="Chapter 2 Data sources | YOUR TITLE HERE" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <title>Chapter 2 Data sources | California Fires</title>
+  <meta name="description" content="Chapter 2 Data sources | California Fires" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Data sources | YOUR TITLE HERE" />
+  <meta property="og:title" content="Chapter 2 Data sources | California Fires" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Data sources | YOUR TITLE HERE" />
+  <meta name="twitter:title" content="Chapter 2 Data sources | California Fires" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Abhishek Sinha, Tomislav Galjanić" />
 
 
-<meta name="date" content="2020-11-09" />
+<meta name="date" content="2021-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="data-transformation.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -68,14 +67,20 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">CF</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#long-term-trends"><i class="fa fa-check"></i><b>5.1</b> Long term trends</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analysis-of-wildfire-incidents-in-california-from-2015-to-2019"><i class="fa fa-check"></i><b>5.2</b> Analysis of wildfire incidents in California from 2015 to 2019</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#correlation-of-the-key-wildfire-impacts-acres-burned-property-destroyed-or-damaged-and-human-fatalities"><i class="fa fa-check"></i><b>5.3</b> Correlation of the key wildfire impacts (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#all-financial-costs-together"><i class="fa fa-check"></i><b>5.4</b> All financial costs together</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -89,7 +94,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">California Fires</a>
           </h1>
         </div>
 
@@ -99,6 +104,40 @@
             <section class="normal" id="section-">
 <div id="data-sources" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<p>In this project, we utilize the following data sources:</p>
+<ol style="list-style-type: decimal">
+<li>Monitoring Trends in Burn “Severity (MTBS)
+<a href="https://www.mtbs.gov/index.php/direct-download" class="uri">https://www.mtbs.gov/index.php/direct-download</a></li>
+</ol>
+<p>As described on the MTBS’s website - “MTBS is an interagency program whose goal is to consistently map the burn severity and extent of large fires across all lands of the United States from 1984 to present. This includes all fires 1000 acres or greater in the western United States and 500 acres or greater in the eastern United States. The extent of coverage includes the continental U.S., Alaska, Hawaii and Puerto Rico.”</p>
+<p>The dataset downloaded from this website contains historical records of fires (1000 acres or greater) in the State of California from 1984 to 2018. The variables included in the dataset are:
+Fire Name, Acres, Ignition Date, Fire Type, and Fire ID, and there are 1,810 total observations in the dataset.</p>
+<p>We utilize this data to investigate the trends in wildfire frequency and size over the the 35 year period covered by the dataset.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>California Department of Forestry and Fire Protection (CAL FIRE)
+<a href="https://www.fire.ca.gov/stats-events/" class="uri">https://www.fire.ca.gov/stats-events/</a></li>
+</ol>
+<p>As stated on the website, the California Department of Forestry and Fire Protection (CAL FIRE) is responsible for “the fire protection and stewardship of over 31 million acres of California’s privately-owned wildlands. In addition, the Department provides varied emergency services in 36 of the State’s 58 counties via contracts with local governments.” CAL FIRE is responsible for both fire prevention and fire suppression activities.</p>
+<p>Two key data sources (both in the PDF format) from the CAL FIRE website are used in this project:
+a) Annual “Wildfire Activity Statistics” (so-called “Redbooks”) for 2015-2019
+(i) Table 5. Large Fires 300 Acres and Greater — Protection Area
+(ii) Table 6. Large Fires 300 Acres and Greater — Number of Fires and Acres Burned by State and Contract Counties Direct
+(iii) Table 18. Dollar Damage by Cause, by County</p>
+<p>The variables included in Tables 5 and 6 are: Incident Number, County, Fire Name, Date Start, Date Contained, Origin DPA, DPA Type, Acres Burned, Vegetation Type, Cause, Structures Destroyed, Structures Damaged, Fatalities Fire, Fatalities Civil. There are 388 total observations for each variable in these tables. The variables included in Table 18 are: Year, County, Total Cost, Arson, Campfire, Debris Burning, Electrical Power, Equipment Use, Lightning, Miscellaneous, Playing With Fire, Railroad, Smoking, Undetermined, and Vehicle. There are 252 total observations for each variable in these tables.</p>
+<p>Data in Tables 5 and 6 are used to investigate the wildfire sizes (acres burned) and their impact on property (structures destroyed and damaged) and human life (fire and civilian fatalities) by county, year, and cause, as well as the association between wildfire sizes and their impact on property and human life</p>
+<p>Data in Table 18 are used to determine association between monetary costs of wildfires and their underlying causes and are also tied to the data in Tables 5 and 6 by our examination of the relationships between the levels of fire size and property damage and total monetary cost.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Suppression Costs
+This dataset is a table of recorded Emergency Fund Fire Suppression Expenditures incurred by CAL FIRE annually from 1979 to 2020 and is used in the analysis as a cost component in our estimation of the total monetary costs of wildfires in California.</li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li>California Public Utility Commission (CPUC)
+<a href="https://www.cpuc.ca.gov/General.aspx?id=6442461400" class="uri">https://www.cpuc.ca.gov/General.aspx?id=6442461400</a></li>
+</ol>
+<p>The CPUC is California’s chief regulatory body tasked with overseeing the utility companies in the state. As part of its effort to oversee the spending of power and gas utilities on safety-related activities, the CPUC has required the utilities to provide annual reports on spending for programs and activities whose goal is to mitigate risk of wildfires from utility infrastructure and equipment. Since Pacific Gas &amp; Electric (PG&amp;E) is the (electric) utility connected with many major wildfires in California in recent years, we utilize PG&amp;E’s “Risk Spending Accountability Reports” from 2015-2019 to investigate trends in the company’s spending on wildfire prevention activities as an indicator of additional costs that have been borne by the society (specifically utility ratepayers) as a result of the wildfires in recent years.</p>
+<p>The dataset specifically utilized in our analysis is a summary table provided by the Energy Division (a section of the CPUC) on the CPUC website that summarizes total PG&amp;E spending on wildfire prevention related “control” programs (by Maintenance Activity Type - MAT) from 2015 to 2019, augmented by the cost of an additional major “mitigation” program introduced in 2018.</p>
+<p>The variables include costs for individual “control” and “mitigation” wildfire risk-reduction programs (30 components) over the five-year period 2015-2019.</p>
+<p>While we did not encounter any major problems with the data, we had to be careful in relating the datasets collected from different sources to each other as some datasets contained summary information and not all summaries were done equally. For example, the CAL FIRE dataset on wildfire (individual) incidents in Tables 5 and 6 is limited to wildfires over 300 acres in size, whereas the dataset on Dollar Damage in Table 18 by county and cause includes all wildfires regardless of size. When contemplating the analysis of the relationship between the fire size and total costs we therefore had to investigate if the majority of the total cost is related to the incidents over 300 acres in size for which we had data or not. To accomplish that we utilized another table in the CAL FIRE dataset that breaks down total costs by wildfire size. As it turnss out, the wildfires over 300 acres account for almost all (97-98%) of the total cost.</p>
 
 </div>
             </section>
@@ -138,7 +177,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/02-data.Rmd",
+"link": "https://github.com/AbhishekSinha4/CaliforniaFires/edit/main/02-data.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -146,7 +185,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/02-data.Rmd",
+"link": "https://github.com/AbhishekSinha4/CaliforniaFires/blob/main/02-data.Rmd",
 "text": null
 },
 "download": null,
