@@ -1,0 +1,15 @@
+introduction
+data-sources
+data-transformation
+missing-values
+results
+long-term-trends
+analysis-of-wildfire-incidents-in-california-from-2015-to-2019
+annual-data-on-acres-burned-property-destroyed-or-damaged-and-human-fatalities
+annual-data-by-county-acres-burned-property-destroyed-or-damaged-and-human-fatalities
+causes-of-wildfires-with-the-most-impact-on-acres-burned-property-destroyed-or-damaged-and-human-fatalities
+financial-damages-and-their-correlation-with-acres-burned-property-destroyed-or-damaged-and-human-fatalities-by-county
+correlation-of-the-key-wildfire-impacts-acres-burned-property-destroyed-or-damaged-and-human-fatalities
+all-financial-costs-taken-together
+interactive-component
+conclusion

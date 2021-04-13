@@ -413,7 +413,7 @@ It is clear from the scatter plots that while they had a positive correlation va
 
 
 
-## All financial costs together 
+## All financial costs taken together 
 
 
 ```{r}
