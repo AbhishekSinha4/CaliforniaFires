@@ -1,2 +1,7 @@
 # Conclusion
 
+
+In this project we investigated trends in frequency and sizes of wildfires in California as well as their impact on the property and human life.  The analysis of 35 years of fire data from 1984 to 2018 shows that the landmass (acres) burned by the wildfires has been steadily increasing over the years, with annual variation. When looking in more detail at the impacts of the wildfires in the 5 year period from 2105 to 2019, we notice that wildfires have caused a significant damage to property (in tens of billions of dollars) as well as to the human life (more than 150 lives lost).  Our investigation of causes of wildfires that lead to major loss of property and life shows that the cause with the biggest impact has been electrical infrastructure and equipment. Though the electrical utilities like PG&E have been increasing their investments in wildfire prevention activities and programs to monitor electrical infrastructure better over the past years (as shown by the Risk Spending Accountability Reports from the CPUC), it is clear that more needs to be done in the future.
+
+One possible extension of our analysis in the future is to investigate connection between the weather conditions (temperature, rainfall) and the wildfires in California.  Due to the limited time we could devote to this project, we were unable to explore that direction at this time.
+

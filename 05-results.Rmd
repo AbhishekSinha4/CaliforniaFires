@@ -1,1 +1,446 @@
 # Results
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE,
+                      message = FALSE)
+```
+
+
+
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+library(stringr)
+library(treemap)
+library(vcd)
+library(RColorBrewer)
+library(zoo)
+library(corrplot)
+library(reshape)
+
+
+options(scipen = 999)
+
+```
+
+
+
+
+```{r}
+#1) Reading in data
+setwd("/Users/abhisheksinha/Desktop/Columbia_Sem_Spring/EDAV/EDAVproject/CaliforniaFires")
+data <- read.csv("support/FireDataOverTime.csv")
+incidents_df <- read.csv(file='support/California_Red_Book_Incidents.csv')
+damages_df <- read.csv(file='support/California_Red_Book_Damages.csv')
+emerg_exp_df <- read.csv(file='support/Emergency_Fund_Fire_Suppression_Expenditures.csv')
+pge_spending <- read.csv(file='support/PGE_wildfire_spending.csv')
+
+data2<- read.csv("support/CalFireDamages.csv")
+data1<-read.csv("support/California_Red_Book_Damages_processed.csv")
+
+```
+
+
+
+
+
+
+```{r data-preparation-mtbs}
+#2) Data cleaning and preparation
+
+
+#a) Monitoring Trends in Burn “Severity (MTBS) dataset
+data <- read.csv("support/FireDataOverTime.csv")
+data[["Ignition.Date"]] <- ymd(data$Ignition.Date)
+data["Year"] <- year(data[["Ignition.Date"]])
+data["Month"] <- month(data[["Ignition.Date"]])
+data["Day"] <- day(data[["Ignition.Date"]])
+
+g <- group_by(data, Year)
+summary <- summarize(g,count = n(), acres = sum(Acres), mean = mean(Acres), median = median(Acres))
+summary$rolling5 <- rollmean(summary$acres, 5, align = "right",fill = NA)
+summary$rolling10 <- rollmean(summary$acres, 10, align = "right",fill = NA)
+
+
+```
+
+
+
+
+
+```{r data-preparation-incidents}
+#b) CAL FIRE datasets
+incidents_df <- incidents_df %>% mutate(Year = year(mdy(Date.Start)), Month = month(mdy(Date.Start)))
+
+incidents_df$Vegetation.Type = sapply(incidents_df$Vegetation.Type, function (x) paste(sort(unlist(strsplit(x, ""))), collapse = ""))
+
+incidents_df$Year = factor(incidents_df$Year) 
+incidents_df$Structures.Destroyed = strtoi(incidents_df$Structures.Destroyed)
+incidents_df$Structures.Damaged = strtoi(incidents_df$Structures.Damaged)
+incidents_df$Fatalities.Fire = strtoi(incidents_df$Fatalities.Fire)
+incidents_df$Fatalities.Civil = strtoi(incidents_df$Fatalities.Civil)
+
+incidents_df <- incidents_df %>% rowwise() %>% mutate(Structures.Destroyed.Damaged=sum(Structures.Destroyed, Structures.Damaged, na.rm = TRUE))
+
+incidents_df <- incidents_df %>% rowwise() %>% mutate(Fatalities.All=sum(Fatalities.Fire, Fatalities.Civil, na.rm = TRUE))
+
+
+```
+
+
+```{r data-preparation-damages}
+
+#EDAnalysis by years
+damages_df$Year = as.character(damages_df$Year)
+x<- group_by(damages_df,Year) %>%
+  summarise(across(where(is.numeric), sum)) 
+
+damage_summary <- damages_df[, !names(damages_df) %in% c("Total.Cost")] %>%
+  pivot_longer(cols = where(is.numeric)) %>%
+  group_by(Year,name) %>%
+  summarise(total = sum(value))
+
+```
+
+
+
+
+
+```{r data-preparation-utility}
+#c) California Public Utility Commission (CPUC) dataset
+pge_spending <- pge_spending %>% pivot_longer(c("X2015", "X2016", "X2017", "X2018", "X2019"), names_to = "Year", values_to = "Cost")
+pge_spending$Year = sapply(pge_spending$Year, function (x) strtoi(str_remove(x, "X")))
+pge_spending$Cost = sapply(pge_spending$Cost, function (x) 1000 * x)
+
+```
+
+## Long term trends
+
+First we look at long term trends in fire incidents over 35 years  (1984 - 2018)
+
+a) Analysis of trends in frequency and size of wildfires in California for the period 1984-2018
+
+```{r}
+ggplot(data=summary,aes(x=Year))+
+  geom_bar(aes(y=acres,fill="Acres"),stat="identity") +
+  geom_line(aes(y=rolling5,colour="Rolling5"),size=1.5)+
+  geom_line(aes(y=rolling10,colour="Rolling10"),size=1.5 )+
+  theme(legend.key=element_blank(),
+        legend.title=element_blank(),
+        legend.box="horizontal")+
+  scale_fill_viridis_d(option="inferno") +
+  labs(title = "California Wildfires 1984-2018", y="Acres Burned")
+
+
+
+```
+
+
+
+It is clearly visible from the visualization that there is an upward trend in severity of fire based incidents which is cause for concern. This is further emphasized by the rolling mean  lines across 5 and 10 years which also show an upward trend.
+
+
+Next we explore the fire sizes.
+
+First we visualize a distribution of all fire incidents across 35 years.
+
+```{r}
+
+ggplot(data=data,aes(x=log(Acres),fill=Acres))+
+  geom_histogram(bins=50)+
+  scale_x_continuous(breaks=seq(0,max(log(data$Acres)), 0.5)) +
+  ggtitle("Distribution of Acres Burned for All Fires (1984-2018)")
+
+
+```
+
+The graph between Count and Acres is incredibly right skewed which is expected as the number of fires with extremely large acre values reduces. The distribution is also very spread. To visualize this better hence, we take the log of the acre column as an axis instead.
+
+It is still clearly visible that the distribution of Acres Burned is incredibly right skewed.
+
+
+
+To explore this distribution further we explore the data by different fire types
+and visualize them as boxplots.
+
+
+```{r}
+ggplot(data=data, aes(x=Fire.Type,color=Fire.Type))+
+  geom_boxplot(aes(y=Acres))+ 
+  coord_flip()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Distribution of Acres Burned by Fire Type (1984-2018)")
+
+
+```
+
+It is clearly visible from the boxplot that wildfires contribute to the largest amount of Burned Acres but these are outliers mostly. The Median fire size for all types is relatively closer.
+
+To get a better picture of this general comparison, we remove outliers and replot the same visualization:
+
+
+```{r}
+ggplot(data=data, aes(x=Fire.Type,color=Fire.Type))+
+  geom_boxplot(aes(y=Acres),outlier.shape = NA) + 
+  coord_flip(ylim = quantile(data$Acres, c(0.1, 0.9))) +
+  ggtitle("Distribution of Acres Burned by Fire Type w/o Outliers (1984-2018)")
+
+
+
+```
+
+This reaffirms that the medians are close to each other, however wildfires are also visibly more right skewed than the other types.
+
+"Out of Area Response" and "Complex" only have 1 row each and hence do not contribute much.
+
+
+We note from this analysis that wildfires seem to be the most prominent and head into the next part of our analysis to focus more on wildfire incidents over the last 5 years.
+
+
+## Analysis of wildfire incidents in California from 2015 to 2019
+
+
+
+
+##### Annual data on Acres Burned, Property Destroyed or Damaged, and Human Fatalities
+
+  
+```{r}
+
+incidents_df %>% group_by(Year) %>% summarise(sum_acres = sum(Acres.Burned)) %>%
+  ggplot(aes(x=Year, y=sum_acres)) +
+  geom_bar(stat = "identity") +
+  ylab("Total Acres Burned") +
+  ggtitle("Acres Burned by Year (2015-2019)")
+
+
+incidents_df %>% group_by(Year) %>% summarise(sum_structures = sum(Structures.Destroyed.Damaged)) %>%
+  ggplot(aes(x=Year, y=sum_structures)) +
+  geom_bar(stat = "identity") +
+  ylab("Total Structures Destroyed and Damaged") +
+  ggtitle("Structures Destroyed and Damaged by Year (2015-2019)")
+
+
+incidents_df %>% group_by(Year) %>% summarise(sum_fatalities = sum(Fatalities.All)) %>%
+  ggplot(aes(x=Year, y=sum_fatalities)) +
+  geom_bar(stat = "identity") +
+  ylab("Total Fatalities (Fire & Civil)") +
+  ggtitle("Fatalities (Fire & Civil) by Year (2015-2019)")
+
+
+```
+
+
+
+
+We visualize the impact caused by fires over the past 5 years to get an understanding of the scale of damage caused over the years.
+2018 seems to have been the most damaging in terms of lives lost and acres burned but 2017 seems to peak in terms of most structures destroyed and damaged.
+
+##### Annual data by County (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)
+
+```{r}
+
+incidents_tma <- incidents_df %>% group_by(Year, County) %>% summarise(Total.Acres = sum(Acres.Burned))
+
+treemap(incidents_tma,
+        index=c("Year", "County"),
+        vSize = "Total.Acres",
+        type = "index"
+)
+
+
+incidents_tms <- incidents_df %>% group_by(Year, County) %>% summarise(Total.Structures.Destroyed.Damaged = sum(Structures.Destroyed.Damaged))
+
+treemap(incidents_tms,
+        index=c("Year", "County"),
+        vSize = "Total.Structures.Destroyed.Damaged",
+        type = "index"
+)
+
+
+incidents_tmf <- incidents_df %>% group_by(Year, County) %>% summarise(Total.Fatalities = sum(Fatalities.All))
+
+treemap(incidents_tmf,
+        index=c("Year", "County"),
+        vSize = "Total.Fatalities",
+        type = "index"
+)
+
+```
+
+We visualize the impact caused by fires to each county to get an understanding of which counties have been most impacted in terms of acres lost, structures damaged and lives lost.
+
+Butte County seems to have lost a lot of lives in 2018 and Napa consistently seems to be showing cause for concern.
+It can be noted here though that no county seems to have been consistently harmed every year, (rather large incidents are not that frequent it seems).
+
+
+##### Causes of wildfires with the most impact on Acres Burned, Property Destroyed or Damaged, and Human Fatalities
+
+```{r plots}
+
+ggplot(incidents_df,aes(x = reorder(Cause, Acres.Burned, FUN = sum),
+                           y = Acres.Burned)) +
+  geom_bar(aes(fill=Year), stat = "identity") + 
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Acres Burned by Cause and Year") +
+  xlab("Wildfire Cause") +
+  ylab("Acres Burned") +
+  coord_flip()
+
+ggplot(incidents_df,aes(x = reorder(Cause, Structures.Destroyed.Damaged, FUN = sum),
+                           y = Structures.Destroyed.Damaged)) +
+  geom_bar(aes(fill=Year), stat = "identity") + 
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Structures Damaged/Destroyed by Cause and Year") +
+  xlab("Wildfire Cause") +
+  ylab("Structures Destroyed and Damaged") +
+  coord_flip()
+
+ggplot(incidents_df,aes(x = reorder(Cause, Fatalities.All, FUN = sum),
+                           y = Fatalities.All)) +
+  geom_bar(aes(fill=Year), stat = "identity") + 
+  scale_fill_brewer(palette = "Set3") +
+  xlab("Wildfire Cause") +
+  ylab("Fatalities All") +
+  labs(title = "Fatalities by Cause and Year") +
+  coord_flip()
+
+
+```
+
+We visualize the impact caused by fires by cause to get an understanding of which causes require the most concern. 
+Electric Power based incidents seem to have a significant human cost (lives lost and property damage) while most acres seemed to have been burned by undetermined sources (rural areas?).
+
+##### Financial $ damages and their correlation with Acres Burned, Property Destroyed or Damaged, and Human Fatalities (by County)
+
+```{r}
+
+# Stacked + percent
+
+totals <- damage_summary %>%
+  group_by(name) %>%
+  summarize(total=sum(total))
+
+totals<-totals[order(-totals$total),]
+
+ggplot(data=damage_summary,aes(x=reorder(name,total,FUN="sum"),y=total/1000000,fill=Year))+
+  geom_bar(stat="identity")+
+  labs(title = "Financial Damage by Cause and Year ($ million)", x="Wildfire Cause", y="Cost") +
+  coord_flip()
+
+
+```
+
+
+The most financial damage was caused by Electic Power, consistent with our previous impact analysis.
+
+
+Having seem the large impact caused by various fire causes over the years, we look at relationships that might exist there.
+
+## Correlation of the key wildfire impacts (Acres Burned, Property Destroyed or Damaged, and Human Fatalities)
+
+
+
+We plot scatter
+
+
+
+```{r}
+
+data1$Date.Start<- mdy(data1$Date.Start)
+data1$Date.Contained<- mdy(data1$Date.Contained)
+data1$Year <- year(data1$Date.Start)
+
+data2$Year <- as.character(data2$Year)
+data2$County <- toupper(data2$County)
+
+
+
+data1_clean <- data1 %>%
+  group_by(Year,County,Cause) %>%
+  summarize(Acres = sum(Acres.Burned,na.rm=TRUE), destroyed = sum(Structures.Destroyed,na.rm=TRUE),damaged = sum(Structures.Damaged,na.rm=TRUE),dead_fire = sum(Fatalities.Fire,na.rm=TRUE),dead_civil = sum(Fatalities.Civil,na.rm=TRUE))
+
+
+data2_clean <- data2[, !names(data2) %in% c("Total.Cost")] %>%
+  pivot_longer(cols = where(is.numeric)) 
+#data2_clean <- data2_clean[data2_clean$value != 0,]
+data2_clean$name <- toupper(data2_clean$name)
+data2_clean$name <- gsub("\\."," ",data2_clean$name)
+merged_data <- merge(data1_clean,data2_clean,by.x = c("Year","County","Cause"),by.y=c("Year","County","name"))
+
+library(corrplot)
+correlations <- cor(merged_data[,4:9])
+
+library(reshape)
+ggplot(data = melt(correlations), aes(x = X1, y = X2, fill = value)) +
+  geom_tile()+
+  labs(title = "Correlation Matrix On Fire Data", 
+       x = "", y = "", fill = "Correlation Value")+
+  scale_fill_gradient(low="#56B1F7",high="#132B43")
+
+
+```
+
+We plot a correlation matrix between the various impact columns as a heat map and everything demonstrates some amount of positive correlation.
+
+Importantly however, damaged properties seem to share a very high correlation with civilian deaths. 
+
+For the other columns we look at scatterplots to understand them better.
+
+```{r}
+
+ggplot(incidents_df,aes(x = Acres.Burned, color = Cause)) +
+  geom_point(aes(y=Structures.Destroyed.Damaged)) +
+  labs(title = "Acres Burned vs. Structures Destroyed/Damaged (by Cause)")
+  
+ggplot(incidents_df,aes(x = Structures.Destroyed, color = Cause)) +
+  geom_point(aes(y =  Fatalities.All)) +
+  labs(title = "Structures Destroyed/Damaged vs Fatalities (by Cause)")
+
+ggplot(incidents_df,aes(x = Acres.Burned, color = Cause)) +
+  geom_point(aes(y = Fatalities.All)) +
+  labs(title = "Acres Burned vs. Fatalities (by Cause)")
+
+```
+
+It is clear from the scatter plots that while they had a positive correlation value, the columns do not seem to have too strong of a relationship. The high positive value might be due to the presence of many low and zero values in the impact columns.
+
+"Structural damages" and "Acres" burned do seem to have some positive relationship but it is not too strong.
+
+
+
+## All financial costs together 
+
+
+```{r}
+
+damages_tc <- damages_df %>% group_by(Year) %>% summarise(Damages.Cost = sum(Total.Cost, na.rm = TRUE))
+
+pg_spending_tc <- pge_spending %>% group_by(Year) %>% summarise(Utility.Cost = sum(Cost, na.rm = TRUE))
+
+total_cost_df <- data_frame("Year" = damages_tc$Year, "Damages.Cost" = damages_tc$Damages.Cost, "Fire.Suppression.Cost" = emerg_exp_df$Expenditures[emerg_exp_df$Fiscal.Year>=2015 & emerg_exp_df$Fiscal.Year<=2019], "PGE.Fire.Risk.Cost" = pg_spending_tc$Utility.Cost)
+
+total_cost_df <- total_cost_df %>% pivot_longer(c("Damages.Cost", "Fire.Suppression.Cost", "PGE.Fire.Risk.Cost"), names_to = "Type", values_to = "Cost")
+```
+
+
+```{r}
+
+ggplot(total_cost_df, aes(x=Year, y=Cost/1000000, fill=Type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  ylab("Cost ($ Million)") +
+  labs(title = "Aggregate Financial Costs")
+  
+
+```
+
+
+Finally we visualize all the Finances that go into these fire incidents and compare the amount of money spent yearly for fire prevention, the amount in terms of damages and the cost of suppressing the fire itself.
+
+
+
+

@@ -1,2 +1,45 @@
 # Data sources
 
+
+In this project, we utilize the following data sources:
+
+1) Monitoring Trends in Burn “Severity (MTBS)
+https://www.mtbs.gov/index.php/direct-download
+
+As described on the MTBS's website - "MTBS is an interagency program whose goal is to consistently map the burn severity and extent of large fires across all lands of the United States from 1984 to present. This includes all fires 1000 acres or greater in the western United States and 500 acres or greater in the eastern United States. The extent of coverage includes the continental U.S., Alaska, Hawaii and Puerto Rico.”
+
+The dataset downloaded from this website contains historical records of fires (1000 acres or greater) in the State of California from 1984 to 2018. The variables included in the dataset are:
+Fire Name, Acres, Ignition Date, Fire Type, and Fire ID, and there are 1,810 total observations in the dataset.
+
+We utilize this data to investigate the trends in wildfire frequency and size over the the 35 year period covered by the dataset.
+
+2) California Department of Forestry and Fire Protection (CAL FIRE)
+https://www.fire.ca.gov/stats-events/
+
+As stated on the website, the California Department of Forestry and Fire Protection (CAL FIRE) is responsible for "the fire protection and stewardship of over 31 million acres of California's privately-owned wildlands. In addition, the Department provides varied emergency services in 36 of the State's 58 counties via contracts with local governments."  CAL FIRE is responsible for both fire prevention and fire suppression activities.
+
+Two key data sources (both in the PDF format) from the CAL FIRE website are used in this project:
+a) Annual "Wildfire Activity Statistics" (so-called "Redbooks") for 2015-2019
+(i)   Table 5. Large Fires 300 Acres and Greater — Protection Area
+(ii)  Table 6. Large Fires 300 Acres and Greater — Number of Fires and Acres Burned by State and Contract Counties Direct 
+(iii) Table 18. Dollar Damage by Cause, by County
+
+The variables included in Tables 5 and 6 are: Incident Number, County, Fire Name, Date Start, Date Contained, Origin DPA, DPA Type, Acres Burned, Vegetation Type, Cause, Structures Destroyed, Structures Damaged, Fatalities Fire, Fatalities Civil. There are 388 total observations for each variable in these tables.  The variables included in Table 18 are: Year, County, Total Cost, Arson, Campfire, Debris Burning, Electrical Power, Equipment Use, Lightning, Miscellaneous, Playing With Fire, Railroad, Smoking, Undetermined, and Vehicle. There are 252 total observations for each variable in these tables.
+
+Data in Tables 5 and 6 are used to investigate the wildfire sizes (acres burned) and their impact on property (structures destroyed and damaged) and human life (fire and civilian fatalities) by county, year, and cause, as well as the association between wildfire sizes and their impact on property and human life
+
+Data in Table 18 are used to determine association between monetary costs of wildfires and their underlying causes and are also tied to the data in Tables 5 and 6 by our examination of the relationships between the levels of fire size and property damage and total monetary cost.
+
+b) Suppression Costs
+This dataset is a table of recorded Emergency Fund Fire Suppression Expenditures incurred by CAL FIRE annually from 1979 to 2020 and is used in the analysis as a cost component in our estimation of the total monetary costs of wildfires in California.
+
+3) California Public Utility Commission (CPUC)
+https://www.cpuc.ca.gov/General.aspx?id=6442461400
+
+The CPUC is California's chief regulatory body tasked with overseeing the utility companies in the state.  As part of its effort to oversee the spending of power and gas utilities on safety-related activities, the CPUC has required the utilities to provide annual reports on spending for programs and activities whose goal is to mitigate risk of wildfires from utility infrastructure and equipment. Since Pacific Gas & Electric (PG&E) is the (electric) utility connected with many major wildfires in California in recent years, we utilize PG&E's "Risk Spending Accountability Reports" from 2015-2019 to investigate trends in the company's spending on wildfire prevention activities as an indicator of additional costs that have been borne by the society (specifically utility ratepayers) as a result of the wildfires in recent years.
+
+The dataset specifically utilized in our analysis is a summary table provided by the Energy Division (a section of the CPUC) on the CPUC website that summarizes total PG&E spending on wildfire prevention related "control" programs (by Maintenance Activity Type - MAT) from 2015 to 2019, augmented by the cost of an additional major "mitigation" program introduced in 2018.
+
+The variables include costs for individual "control" and "mitigation" wildfire risk-reduction programs (30 components) over the five-year period 2015-2019.
+
+While we did not encounter any major problems with the data, we had to be careful in relating the datasets collected from different sources to each other as some datasets contained summary information and not all summaries were done equally. For example, the CAL FIRE dataset on wildfire (individual) incidents in Tables 5 and 6 is limited to wildfires over 300 acres in size, whereas the dataset on Dollar Damage in Table 18 by county and cause includes all wildfires regardless of size.  When contemplating the analysis of the relationship between the fire size and total costs we therefore had to investigate if the majority of the total cost is related to the incidents over 300 acres in size for which we had data or not.  To accomplish that we utilized another table in the CAL FIRE dataset that breaks down total costs by wildfire size. As it turnss out, the wildfires over 300 acres account for almost all (97-98%) of the total cost.

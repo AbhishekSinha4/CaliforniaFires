@@ -1,1 +1,6 @@
 # Data transformation
+
+
+As our datasets mostly included PDF files, we primarily utilized Tabula software (https://tabula.technology) to get the data from the PDF files into CSV format. We next combined individual CSV files into a single CSV file for the entire period if applicable (e.g. for annual PDF report files) and then imported the all relevant CSV files into R for further analysis and visualization.  The only exception to this process is the MTBS dataset on historical records of fires in the State of California from 1984 to 2018 which we were able to copy/paste from the website (by selecting all the cells in the table on the website) and into a CSV file directly.
+
+Finally, the CAL FIRE dataset in Table 6 (Dollar Damages) in year 2015 had finer granularity of cost breakdown the county level for some counties, so we aggregated those values to the county level.
