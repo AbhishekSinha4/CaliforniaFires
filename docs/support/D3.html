@@ -40,10 +40,6 @@
 	<div id="causes">
 		<h3>Choose Fire Cause</h3>
 		<table>
-			<tr>
-				<td></td>
-				<td></td>
-			</tr>
 		</table>
 		
 	</div>
@@ -1973,6 +1969,7 @@ for(var i=0;i<data.length;i++){
 
 allCounties = Array.from(new Set(CountyList)).sort()
 allCauses = Array.from(new Set(CauseList)).sort()
+currentCauses=allCauses
 colorArray = ['green','red','blue','yellow','orange','black','pink','gray','brown','cyan','purple']
 colorMap = {}
 for(var i=0;i<allCauses.length;i++){
@@ -1990,7 +1987,7 @@ for(var i=0;i<allCounties.length;i++){
 }
 
 for(var i=0;i<allCauses.length;i++){
-	document.querySelector("#causes table").innerHTML += '<tr><td>'+allCauses[i]+'</td><td><input type="checkbox" name="cause" value="'+allCauses[i]+'" checked=true></td></tr>'
+	document.querySelector("#causes table").innerHTML += '<tr><td>'+allCauses[i]+'</td><td><button class="add" value="'+allCauses[i]+'">Add</button></td><td><button class="remove" value="'+allCauses[i]+'">Remove</button></td></tr>'
 }
 
 function select(county,causeList){
@@ -2006,7 +2003,10 @@ function select(county,causeList){
 
 }
 
-function graph(){
+function graph(){     
+  
+  //Function to decide which graph to create
+
 	document.querySelector("#graph").innerHTML = ""
 	county1 = document.querySelector("#county1").value
 	county2 = document.querySelector("#county2").value
@@ -2018,22 +2018,25 @@ function graph(){
 		}
 	}
 	if(county1 != "None"){
-		data1 = select(county1,causes)
-		createGraph(data1,county1,causes)
+		data1 = select(county1,currentCauses)
+		createGraph(data1,county1,currentCauses)
 	}
 	if(county2 != "None"){
-		data2 = select(county2,causes)	
-		createGraph(data2,county2,causes)
+		data2 = select(county2,currentCauses)	
+		createGraph(data2,county2,currentCauses)
 	}
 	
 	
 }
 
-function createGraph(data,county,causes){
+function createGraph(data,county,causes){   //Function to create the graph
 
 	var margin = {top: 20, right: 15, bottom: 60, left: 80}
 	var width = (document.body.clientWidth * 0.48) - margin.left - margin.right
 	var height = 730 - margin.top - margin.bottom;
+	
+	//data must be formatted as stack
+	
 	var stackdata  = [{"Year":2015},{"Year":2016},{"Year":2017},{"Year":2018},{"Year":2019}]
 	for(var i=0;i<stackdata.length;i++){
 		for(var j=0;j<causes.length;j++){
@@ -2045,7 +2048,7 @@ function createGraph(data,county,causes){
 			}
 		}
 	}
-
+  //creating svg
 	var svg = d3.select("#graph")
 	  .append("svg")
 	    .attr("width", width + margin.left + margin.right)
@@ -2053,7 +2056,7 @@ function createGraph(data,county,causes){
 	  .append("g")
 	    .attr("transform",
 	          "translate(" + margin.left + "," + margin.top + ")");
-
+  //adding x axis
 	var x = d3.scaleBand()
 	      .domain([2015,2016,2017,2018,2019])
 	      .range([0, width])
@@ -2061,7 +2064,7 @@ function createGraph(data,county,causes){
 	 svg.append("g")
 	    .attr("transform", "translate(0," + height + ")")
 	    .call(d3.axisBottom(x).tickSizeOuter(0));
-
+  //adding x label
 	svg.append("text")
 	    .attr("class", "x label")
 	    .attr("text-anchor", "end")
@@ -2069,13 +2072,13 @@ function createGraph(data,county,causes){
 	    .attr("y", height+30)
 	    .text("Years");
 
-
+  //adding y axis
 	var y = d3.scaleLinear()
 	    .domain([0, Math.max(...AcresList)])
 	    .range([ height, 0 ]);
 	  svg.append("g")
 	    .call(d3.axisLeft(y).tickSizeOuter(0));
-
+  //adding y label
 	svg.append("text")
 	    .attr("class", "y label")
 	    .attr("text-anchor", "end")
@@ -2084,7 +2087,7 @@ function createGraph(data,county,causes){
 	    .attr("transform", "rotate(-90)")
 	    .text("Acres Burned");
 
-
+  //adding graph title
 	svg.append("text")
 	    .attr("class", "plotTitle")
 	    .attr("text-anchor", "start")
@@ -2105,6 +2108,7 @@ function createGraph(data,county,causes){
 	for(var i =0;i<causes.length;i++){
 		correspondingColor.push(colorMap[causes[i]])
 	}
+	//setting up colors
 	var color = d3.scaleOrdinal()
 	    .domain(causes)
 	    .range(correspondingColor)
@@ -2112,7 +2116,7 @@ function createGraph(data,county,causes){
 	var stackedData = d3.stack()
 	    .keys(causes).order(d3.stackOrderDescending)
 	    (stackdata)
-
+ //Adding data
 	svg.append("g")
 	    .selectAll("g")
 	    .data(stackedData)
@@ -2128,12 +2132,12 @@ function createGraph(data,county,causes){
 	        .attr("y", function(d) { return y(d[1]); })
 	        .attr("height", function(d) { return y(d[0]) - y(d[1]); })
 	        .attr("width",x.bandwidth())
-
+  //formatting data for legend
 	legendData = []
 	for(var i = 0;i<causes.length;i++){
 		legendData.push({"index":i, "color": correspondingColor[i], "cause": causes[i]})
 	}
-
+  //adding legend colors
 	svg.append("g")
 	    .selectAll("g")
 	    .data(legendData)
@@ -2143,7 +2147,7 @@ function createGraph(data,county,causes){
 	      .attr("y",function(d){ return 15*d.index})
 	      .attr("height",8)
 	      .attr("width",8)
-
+  //adding legend labels
 	svg.append("g")
 	    .selectAll("g")
 	    .data(legendData)
@@ -2153,16 +2157,23 @@ function createGraph(data,county,causes){
 	      .attr("x",width-80)
 	      .attr("y",function(d){ return 5 + 15*d.index})
 	      .text(function(d){return d.cause})
-	// svg.append("circle").attr("cx",200).attr("cy",130).attr("r", 6).style("fill", "#69b3a2")
-	// svg.append("circle").attr("cx",200).attr("cy",160).attr("r", 6).style("fill", "#404080")
-	// svg.append("text").attr("x", 220).attr("y", 130).text("variable A").style("font-size", "15px").attr("alignment-baseline","middle")
-	// svg.append("text").attr("x", 220).attr("y", 160).text("variable B").style("font-size", "15px").attr("alignment-baseline","middle")
-
 }
 
+//defining trigger events
 
 d3.selectAll("select").on("change",graph)
-d3.selectAll("#causes input").on("change",graph)
+d3.selectAll("#causes button.remove").on("click",function(){
+	if(currentCauses.includes(this.value)){
+		currentCauses.splice(currentCauses.indexOf(this.value),1);
+		graph();
+	}
+})
+d3.selectAll("#causes button.add").on("click",function(){
+	if(!currentCauses.includes(this.value)){
+		currentCauses.push(this.value); 
+		graph();
+	}
+})
 
 
 </script>
