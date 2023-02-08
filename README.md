@@ -1,4 +1,4 @@
-#California Fire Analysis by Abhishek Sinha and Tomislav Galjanic
+# California Fire Analysis by Abhishek Sinha and Tomislav Galjanic
 
 The large and devastating wildfires in the United States (especially in the West) and globally have become a common story across the news channels in recent years. According to the California Air Resources Board (CARB), the state agency that oversees climate change programs and pollution control efforts, “climate change, primarily caused by the burning of fossil fuels, is increasing the frequency and severity of wildfires not only in California but also all over the world. Since 1950, the area burned by California wildfires each year has been increasing, as spring and summer temperatures have warmed and spring snowmelt has occurred earlier.”
 
